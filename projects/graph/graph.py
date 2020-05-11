@@ -71,15 +71,23 @@ class Graph:
         else:
             print("This vertex does not exist")
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
-
+        if visited is None:
+            visited = set()
+        if starting_vertex in self.vertices:
+            if starting_vertex not in visited:
+                print(starting_vertex)
+                visited.add(starting_vertex)
+                for neighbour in self.vertices[starting_vertex]:
+                    self.dft_recursive(neighbour, visited)
+        else:
+            print("This vertex does not exist")
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -155,8 +163,8 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    graph.dft(1)
-    graph.dft_recursive(1)
+    # graph.dft(1)
+    # graph.dft_recursive(1)
 
     '''
     Valid BFS path:
