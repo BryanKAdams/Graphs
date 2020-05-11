@@ -13,33 +13,63 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+        else:
+            raise IndexError("Vertex does not exist in graph")
+
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
-
+        return self.vertices[vertex_id]
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        if starting_vertex in self.vertices:
+            q = Queue()
+            q.enqueue(starting_vertex)
+
+            visited = set()
+
+            while q.size() > 0:
+                v = q.dequeue()
+
+                if v not in visited:
+                    print(v)
+                    visited.add(v)
+                    for next_vert in self.get_neighbors(v):
+                        q.enqueue(next_vert)
+        else:
+            print("This vertex does not exist.")
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        if starting_vertex in self.vertices:
+            s = Stack()
+            s.push(starting_vertex)
+            visited = set()
+            while s.size() > 0:
+                v = s.pop()
+                if v not in visited:
+                    print(v)
+                    visited.add(v)
+                    for next_vert in self.get_neighbors(v):
+                        s.push(next_vert)
+        else:
+            print("This vertex does not exist")
 
     def dft_recursive(self, starting_vertex):
         """
@@ -102,7 +132,6 @@ if __name__ == '__main__':
         {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
     '''
     print(graph.vertices)
-
     '''
     Valid BFT paths:
         1, 2, 3, 4, 5, 6, 7
@@ -118,8 +147,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
-    graph.bft(1)
-
+    # graph.bft(1)
     '''
     Valid DFT paths:
         1, 2, 3, 5, 4, 6, 7
