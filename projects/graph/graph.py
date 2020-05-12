@@ -89,13 +89,20 @@ class Graph:
         else:
             print("This vertex does not exist")
     def bfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing the shortest path from
-        starting_vertex to destination_vertex in
-        breath-first order.
-        """
-        pass  # TODO
-
+        q = Queue()
+        q.enqueue([starting_vertex])
+        visited = set()
+        while q.size() > 0:
+            current_path = q.dequeue()
+            last_vertex = current_path[-1]
+            if last_vertex not in visited:
+                if last_vertex == destination_vertex:
+                    return current_path
+                visited.add(last_vertex)
+                for v in self.vertices[last_vertex]:
+                    new_path = current_path[:]
+                    new_path.append(v)
+                    q.enqueue(new_path)
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
@@ -139,7 +146,7 @@ if __name__ == '__main__':
     Should print:
         {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
     '''
-    print(graph.vertices)
+    # print(graph.vertices)
     '''
     Valid BFT paths:
         1, 2, 3, 4, 5, 6, 7
@@ -177,5 +184,5 @@ if __name__ == '__main__':
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
-    print(graph.dfs_recursive(1, 6))
+    # print(graph.dfs(1, 6))
+    # print(graph.dfs_recursive(1, 6))
